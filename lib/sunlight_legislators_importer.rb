@@ -1,28 +1,30 @@
 require 'csv'
+require_relative '../app/models/legislator'
 
 class SunlightLegislatorsImporter
-  def self.import(filename)
+  def self.import(filename=File.dirname(__FILE__) + "/../db/data/legislators.csv")
     csv = CSV.new(File.open(filename), :headers => true)
     csv.each do |row|
-      row.each do |field, value|
-        title = row['title']
-        name = "#{row['firstname']} #{row['middlename']} #{row['lastname']} #{row['name_suffix']}"
-        party = row['party']
-        state = row['state']
-        in_office = row['in_office'].to_i
-        gender = row['gender']
-        phone = row['phone']
-        fax = row['phone']
-        website = row['website']
-        webform = row['webform']
-        twitter_id = row['twitter_id']
-        birthdate = row['birthdate']
+      title = row['title']
+      name = row['firstname']
+      name += " #{row['middlename']}" if row['middlename'] != ''
+      name += " #{row['lastname']}" if row['lastname'] != ''
+      name += " #{row['name_suffix']}" if row['name_suffix'] != ''
+      party = row['party']
+      state = row['state']
+      in_office = row['in_office'].to_i
+      gender = row['gender']
+      phone = row['phone']
+      fax = row['phone']
+      website = row['website']
+      webform = row['webform']
+      twitter_id = row['twitter_id']
+      birthdate = row['birthdate']
 
-        Legislator.create!({title: title, name: name, party: party, state: state,
-                   in_office: in_office, gender: gender, phone: phone, fax: fax,
-                   website: website, webform: webform, twitter_id: twitter_id,
-                   birthdate: birthdate})
-      end
+      Legislator.create!({title: title, name: name, party: party, state: state,
+                 in_office: in_office, gender: gender, phone: phone, fax: fax,
+                 website: website, webform: webform, twitter_id: twitter_id,
+                 birthdate: birthdate})
     end
   end
 end

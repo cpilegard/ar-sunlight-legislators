@@ -1,5 +1,5 @@
-require_relative '../../db/congfig'
+require_relative '../../db/config'
 
 class Legislator < ActiveRecord::Base
-	validates :title, :name, :lastname, :party, :state, :in_office, presence: true
+	validates :title, :name, :party, :state, :in_office, presence: true
 end

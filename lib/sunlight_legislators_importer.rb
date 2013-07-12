@@ -6,10 +6,10 @@ class SunlightLegislatorsImporter
     csv = CSV.new(File.open(filename), :headers => true)
     csv.each do |row|
       title = row['title']
-      name = row['firstname']
-      name += " #{row['middlename']}" if row['middlename'] != ''
-      name += " #{row['lastname']}" if row['lastname'] != ''
-      name += " #{row['name_suffix']}" if row['name_suffix'] != ''
+      firstname = row['firstname']
+      middlename = row['middlename']
+      lastname = row['lastname']
+      name_suffix = row['name_suffix']
       party = row['party']
       state = row['state']
       in_office = row['in_office'].to_i
@@ -21,9 +21,10 @@ class SunlightLegislatorsImporter
       twitter_id = row['twitter_id']
       birthdate = row['birthdate']
 
-      Legislator.create!({title: title, name: name, party: party, state: state,
-                 in_office: in_office, gender: gender, phone: phone, fax: fax,
-                 website: website, webform: webform, twitter_id: twitter_id,
+      Legislator.create!({title: title, firstname: firstname, middlename: middlename,
+                 lastname: lastname, name_suffix: name_suffix, party: party, 
+                 state: state, in_office: in_office, gender: gender, phone: phone,
+                 fax: fax, website: website, webform: webform, twitter_id: twitter_id,
                  birthdate: birthdate})
     end
   end
